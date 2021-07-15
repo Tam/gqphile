@@ -1,0 +1,35 @@
+{
+  "name": "gqphile",
+  "author": "Tam <hi@tam.sx>",
+  "description": "An opinionated JS GraphQL client written with Postgraphile in mind",
+  "license": "MIT",
+  "version": "0.0.1",
+  "main": "dist/gqphile.cjs.js",
+  "module": "dist/gqphile.esm.js",
+  "browser": "dist/gqphile.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tam/gqphile.git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^11.0.1",
+    "@rollup/plugin-node-resolve": "^7.0.0",
+    "@rollup/plugin-replace": "^2.4.2",
+    "rollup": "^1.29.0"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "node test/test.js",
+    "pretest": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "graphql": "^15.5.1"
+  }
+}

@@ -1,5 +1,5 @@
 # gqphile
-An opinionised JS GraphQL client written with Postgraphile in mind
+An opinionated JS GraphQL client written with Postgraphile in mind
 
 ```js
 // API
@@ -8,7 +8,7 @@ An opinionised JS GraphQL client written with Postgraphile in mind
 // Client
 // -------------------------------------------------------------------------
 
-class Client {}
+import { Client } from 'gqphile';
 
 const client = new Client({
     uri: 'https://my.api/graph',
@@ -88,6 +88,8 @@ const useLive = (query, options) => {};
 
 // Example Usage
 // =========================================================================
+
+import { gql, /*use...*/ } from 'gqphile';
 
 function ExampleComponent () {
 
