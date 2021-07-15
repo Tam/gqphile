@@ -5,6 +5,41 @@ An opinionised JS GraphQL client written with Postgraphile in mind
 // API
 // =========================================================================
 
+// Client
+// -------------------------------------------------------------------------
+
+class Client {}
+
+const client = new Client({
+    uri: 'https://my.api/graph',
+    wsUri: 'wss://my.api/graph',
+    persistentStorage: window.localStorage,
+    
+    onRequest: async req => {
+    	if (Token.has())
+            req.headers.Authorization = `Bearer ${Token.get()}`;
+    },
+
+    onResponse: async res => {
+        if (res.type === 'ws' && res.body.error === 'jwt expired') {
+            await Token.refresh();
+            return Client.RETRY;
+        }
+    },
+    
+    onError: async (req, res, err) => {
+    	if (err.status === 401) {
+            await Token.refresh();
+            return Client.RETRY;
+        }
+    	
+    	Sentry.log({ req, res, err });
+    },
+});
+
+// Hooks
+// -------------------------------------------------------------------------
+
 /**
  * Direct client access
  */
@@ -56,15 +91,24 @@ const useLive = (query, options) => {};
 
 function ExampleComponent () {
 
-	const { data, loading, errors, refetch } = useQuery();
-
-	const [queryName, { data, loading, errors, called }] = useLazyQuery();
-
-	const [mutationName, { data, loading, errors, progress }] = useMutation();
-
-	const { data, loading, errors } = useSubscription();
-
-	const { data, loading, errors } = useLive();
+    const { data, loading, errors, refetch } = useQuery(gql`
+        query ExampleQuery {
+            ping
+        }
+    `, {
+    	skip: false,
+        variables: {
+            // ...
+        },
+    });
+    
+    const [queryName, { data, loading, errors, called }] = useLazyQuery();
+    
+    const [mutationName, { data, loading, errors, progress }] = useMutation();
+    
+    const { data, loading, errors } = useSubscription();
+    
+    const { data, loading, errors } = useLive();
 
 }
 ```
