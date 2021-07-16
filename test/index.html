@@ -10,7 +10,9 @@
 <body>
 <script src="../dist/gqphile.umd.js"></script>
 <script>
-	const { gql } = gqphile;
+	const { gql, Client } = gqphile;
+
+	const client = new Client({});
 
 	console.log(gql`
 		query DoThing ($id: UUID!) {

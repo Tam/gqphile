@@ -23,7 +23,9 @@ const client = new Client({
     onResponse: async res => {
         if (res.type === 'ws' && res.body.error === 'jwt expired') {
             await Token.refresh();
-            return Client.RETRY;
+            // These have a set order to execute, if you want to override that 
+            // order, return an array instead: [Client.WS_AUTH, Client.WS_RETRY]
+            return Client.WS_AUTH|Client.WS_RETRY;
         }
     },
     

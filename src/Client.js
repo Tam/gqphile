@@ -40,13 +40,15 @@ export default class Client {
 		uri,
 		wsUri,
 		persistentStorage,
-	}) {
+	} = {}) {
 		this.uri = uri;
 		this.wsUri = wsUri;
 
 		this._cache = new Cache({
 			persistentStorage,
 		});
+
+		console.log('Client Created!');
 	}
 
 }
