@@ -11,23 +11,24 @@ const babelPlugin = babel({
 
 export default [
 	// browser-friendly UMD build
-	{
-		input: 'src/index.js',
-		output: {
-			name: 'gqphile',
-			file: pkg.browser,
-			format: 'umd'
-		},
-		plugins: [
-			resolve(), // so Rollup can find dependencies
-			babelPlugin,
-			commonjs(), // so Rollup can convert dependencies to an ES module
-			replace({
-				preventAssignment: true,
-				'process.env.NODE_ENV': JSON.stringify('production'),
-			}),
-		],
-	},
+	// {
+	// 	input: 'src/index.js',
+	// 	external: ['graphql'],
+	// 	output: {
+	// 		name: 'gqphile',
+	// 		file: pkg.browser,
+	// 		format: 'umd'
+	// 	},
+	// 	plugins: [
+	// 		resolve(), // so Rollup can find dependencies
+	// 		babelPlugin,
+	// 		commonjs(), // so Rollup can convert dependencies to an ES module
+	// 		replace({
+	// 			preventAssignment: true,
+	// 			'process.env.NODE_ENV': JSON.stringify('production'),
+	// 		}),
+	// 	],
+	// },
 
 	// CommonJS (for Node) and ES module (for bundlers) build.
 	// (We could have three entries in the configuration array

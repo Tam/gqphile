@@ -8,21 +8,32 @@
 	<title>Test</title>
 </head>
 <body>
-<script src="../dist/gqphile.umd.js"></script>
+<script>
+	process = { env: { NODE_ENV: 'dev' } };
+</script>
+<script src="../dist/gqphile.js"></script>
 <script>
 	const { gql, Client } = gqphile;
 
-	const client = new Client({});
+	const client = new Client({
+		uri: 'https://countries.trevorblades.com/',
+	});
 
-	console.log(gql`
-		query DoThing ($id: UUID!) {
-			ping
-			not (thing: "123")
-			...Another
+	const COUNTRY_FRAGMENT = gql`
+		fragment Country on Country {
+			code
+			name
+			emoji
 		}
-		fragment Another on Query {
-			on hi
+	`;
+
+	client.send(gql`
+		query GetCountries {
+			countries {
+				...Country
+			}
 		}
+		${COUNTRY_FRAGMENT}
 	`);
 </script>
 </body>
